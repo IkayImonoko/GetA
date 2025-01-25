@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: row; /* Горизонтальное расположение всех элементов */
+            flex-wrap: wrap; /* Позволяет элементам переноситься на следующую строку */
+            height: 100vh; /* Высота контейнера */
+            width: 100%; /* Ширина контейнера */
+        }
+
+        .top {
+            flex: 3 0 100%; /* 3 части ширины, перенос на новую строку */
+            height: 20%; /* Высота 20% */
+            background-color: lightgray;
+
+        }
+
+        .meny {
+            flex: 1 0 25%; /* 1 часть ширины */
+            height: 60%; /* Высота 60% */
+            background-color: lightblue;
+
+        }
+
+        .body {
+            flex: 3 0 75%; /* 3 части ширины */
+            height: 60%; /* Высота 60% */
+            background-color: lightgreen;
+
+        }
+
+        .bottom {
+            flex: 2 0 100%; /* 2 части ширины, перенос на новую строку */
+            height: 20%; /* Высота 20% */
+            background-color: lightpink;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="top">header (3 части ширины, 20% высоты)</div>
+        <div class="meny">meny (1 часть ширины, 60% высоты)</div>
+        <div class="body">hovedinnhold (3 части ширины, 60% высоты)</div>
+        <div class="bottom">footer (2 части ширины, 20% высоты)</div>
+    </div>
+</body>
+
+</html>

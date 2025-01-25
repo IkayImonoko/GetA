@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100%;
+        }
+        .container2{
+            display: flex;
+            flex-direction: row;
+            flex-grow: 3;
+        }
+
+        .top {
+            flex-grow: 1;
+        }
+
+       .meny {
+        flex-grow: 1;
+       }
+
+        .body {
+            flex-grow: 2;
+        }
+
+       .bottom {
+        flex-grow: 1;
+       }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="top" style="background-color: lightgray">header</div>
+        <div class="container2">
+            <div class="meny" style="background-color: lightblue">meny</div>
+            <div class="body" style="background-color: lightgreen">hovedinnhold</div>
+        </div>
+        <div class="bottom" style="background-color: lightpink">footer</div>
+    </div>
+</body>
+
+</html>
