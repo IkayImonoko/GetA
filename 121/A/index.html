@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 121 A</title>
+</head>
+
+<body>
+    <div>
+        <input id="inputX" type="number" placeholder="x" />
+        <input id="inputY" type="number" placeholder="y" />
+        <button onclick="addCircleFromInput()">Legg til sirkel</button>
+    </div>
+    <br />
+    <div>
+        <input id="inputWidth" type="number" placeholder="width" />
+        <input id="inputHeight" type="number" placeholder="height" />
+        <button onclick="addRecFromInput()">Legg til firkant</button>
+    </div>
+    <br />
+    <div>
+        <select id="inputBGColor">
+            <option value="red">red</option>
+            <option value="green">green</option>
+            <option value="blue">blue</option>
+            <option value="gray">gray</option>
+        </select>
+        <button onclick="changeBGColor()">Change background color</button>
+        <br />
+        <select id="inputCircleColor">
+            <option value="red">red</option>
+            <option value="green">green</option>
+            <option value="blue">blue</option>
+            <option value="gray">gray</option>
+        </select>
+        <button onclick="changeCircleColor()">Change circle color</button>
+    </div>
+    <br />
+    <svg id="mySvg" width="800" height="600" style="background-color: lightgray;">
+    </svg>
+    <script>
+        function addCircle(x, y) {
+            document.getElementById('mySvg').innerHTML = /*HTML*/`
+          <circle id="circle" cx=${x} cy=${y} r="40" stroke="green" stroke-width="4" fill="yellow" />            
+      `;
+        }
+
+        function addRec(w, h) {
+            document.getElementById('mySvg').innerHTML = /*HTML*/`
+          <rect id="rec" width=${w} height=${h} stroke="green" stroke-width="4" fill="yellow" />            
+      `;
+        }
+
+        function addCircleFromInput() {
+            addCircle(document.getElementById('inputX').value,
+                document.getElementById('inputY').value);
+        }
+
+        function changeBGColor() {
+            document.getElementById('mySvg').style.backgroundColor = document.getElementById('inputBGColor').value;
+        }
+
+        function changeCircleColor() {
+            document.getElementById('circle').style.fill = document.getElementById('inputCircleColor').value;
+        }
+
+        function addRecFromInput(){
+            addRec(document.getElementById('inputWidth').value,
+            document.getElementById('inputHeight').value);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 121 B</title>
+    <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+    <table id="myTable"></table>
+    <script>
+        show();
+        function show() {
+            addRow('th', 'Dag', 'Time', 'Minutt', 'Temperatur');
+            addRow('td', 1, 10, 0, 5);
+            addRow('td', 1, 10, 15, 6);
+            addRow('td', 1, 10, 30, 7);
+        };
+
+        function addRow(tag, p1, p2, p3, p4) {
+            document.getElementById('myTable').innerHTML += /*HTML*/ `
+            <tr><${tag}>${p1}</${tag}>
+                <${tag}>${p2}</${tag}>
+                <${tag}>${p3}</${tag}>
+                <${tag}>${p4}</${tag}></tr>
+            `
+        };
+    </script>
+</body>
+
+</html>
