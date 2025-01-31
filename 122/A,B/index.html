@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #board {
+            display: grid;
+            grid-template-columns: repeat(8, 80px);
+            grid-template-rows: repeat(8, 80px);
+        }
+
+        #board>div {
+            border: 1px solid lightblue;
+        }
+
+        .selected {
+            background-color: yellow;
+        }
+
+        .buttons {
+            display: grid;
+            margin: 20px;
+            align-self: center;
+            grid-template-rows: repeat(3, 4rem);
+            grid-template-columns: repeat(3, 4rem);
+            grid-template-areas: ". up ."
+                "left . right"
+                ". down .";
+        }
+
+        .up {
+            grid-area: up;
+        }
+
+        .left {
+            grid-area: left;
+        }
+
+        .right {
+            grid-area: right;
+        }
+
+        .down {
+            grid-area: down;
+        }
+
+        body {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="buttons">
+        <button class="up" onclick="moveSelectedUP()">Up</button>
+        <button class="down" onclick="moveSelectedDown()">Down</button>
+        <button class="right" onclick="moveSelectedRight()">Right</button>
+        <button class="left" onclick="moveSelectedLeft()">left</button>
+    </div>
+    <div id="board">
+    </div>
+    <script>
+        let selectedSquareIndex = 7;
+        const size = 64;
+
+        showBoard();
+
+        function showBoard() {
+            document.getElementById('board').innerHTML = "";
+
+            const pattern = '<div></div>';
+            const part2 = '<div class="selected"></div>';
+
+            const lengthPart1 = selectedSquareIndex;
+            const lengthPart3 = size - (selectedSquareIndex + 1);
+
+            addPattern(pattern, lengthPart1);
+            addPattern(part2);
+            addPattern(pattern, lengthPart3);
+        };
+
+        function moveSelectedUP() {
+            selectedSquareIndex = ((selectedSquareIndex - 8) + size) % size;
+            showBoard()
+        };
+        function moveSelectedDown() {
+            selectedSquareIndex = (selectedSquareIndex + 8) % size;
+            showBoard()
+        };
+        function moveSelectedRight() {
+            selectedSquareIndex = (selectedSquareIndex + 1) % size;
+            showBoard();
+        };
+        function moveSelectedLeft() {
+            selectedSquareIndex = ((selectedSquareIndex - 1) + size) % size;
+            showBoard();
+        };
+        function addPattern(pattern, patternAmount = 1) {
+            document.getElementById('board').innerHTML += ''.padEnd(pattern.length * patternAmount, pattern);
+        };
+    </script>
+</body>
+
+</html>
