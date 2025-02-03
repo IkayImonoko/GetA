@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 122 D</title>
+    <style>
+        #text {
+            font-size: 10pt;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <button onclick="fontSizeUP()">font +</button>
+        <button onclick="fontSizeDown()">font -</button>
+        <select onchange="setFontFamily(this.value)">
+            <option>Arial</option>
+            <option>Verdana</option>
+            <option>Tahoma</option>
+            <option>Trebuchet MS</option>
+            <option>Times New Roman</option>
+            <option>Georgia</option>
+            <option>Garamond</option>
+            <option>Courier New</option>
+            <option>Brush Script MT</option>
+        </select>
+        <br/>
+        <button onclick="changeRedValue('+')">Red +</button>
+        <button onclick="changeRedValue('-')">Red -</button>
+        <br/>
+        <button onclick="changeGreenValue('+')">Green +</button>
+        <button onclick="changeGreenValue('-')">Green -</button>
+        <br/>
+        <button onclick="changeBlueValue('+')">Blue +</button>
+        <button onclick="changeBlueValue('-')">Blue -</button>
+    </div>
+    <div id="text">
+    </div>
+    <script>
+        redValue = greenValue = blueValue = 125
+        show();
+        function show() {
+            document.getElementById('text').innerHTML = /*HTML*/ `
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+        laborum.`;
+        };
+        let currentFontSize = 10;
+
+        function fontSizeUP() {
+            currentFontSize++;
+            document.getElementById("text").style.fontSize = `${currentFontSize}pt`;
+        };
+        function fontSizeDown() {
+            currentFontSize--;
+            document.getElementById("text").style.fontSize = `${currentFontSize}pt`;
+        };
+        function setFontFamily(fontFamily) {
+            document.getElementById('text').style.fontFamily = fontFamily;
+        }
+        function changeRedValue(operator){
+            if (operator === "+") {redValue += 5}
+                else {redValue -= 5};
+            document.getElementById('text').style.backgroundColor = `rgb(${redValue},${greenValue},${blueValue})`;
+        }
+        function changeGreenValue(operator){
+            if (operator === "+") {greenValue += 5}
+                else {greenValue -= 5};
+            document.getElementById('text').style.backgroundColor = `rgb(${redValue},${greenValue},${blueValue})`;
+        }
+        function changeBlueValue(operator){
+            if (operator === "+") {blueValue += 5}
+                else {blueValue -= 5};
+            document.getElementById('text').style.backgroundColor = `rgb(${redValue},${greenValue},${blueValue})`;
+        }
+    </script>
+</body>
+
+</html>
