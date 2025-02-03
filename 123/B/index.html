@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 123 B</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="range" min="1" max="100" step="1" id="colorRange" oninput="setBackColorForDiv(this.value)">
+    </div>
+    <script>
+        function setBackColorForDiv(currentValue) {
+            let style = document.getElementById("app").style;
+            if (currentValue < 30) {
+                style.backgroundColor = 'red';
+            } else if (currentValue > 70) {
+                style.backgroundColor = 'green';
+            }
+            else style.backgroundColor = 'yellow';
+        };
+    </script>
+</body>
+
+</html>
