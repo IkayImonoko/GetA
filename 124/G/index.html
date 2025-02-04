@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 124 G</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script>
+        show();
+        function show() {
+            document.getElementById("app").innerHTML = `${createNumberSelector(1, 1, 31, 'Day')}`;
+        };
+        function createNumberSelector(innerHTML, min, max, name) {
+            let isUpDisabled = '';
+            let isDownDisabled = '';
+            if (innerHTML <= min)
+                isDownDisabled = 'disabled';
+            else if (innerHTML >= max)
+                isUpDisabled = 'disabled';
+            return /*HTML*/ `
+            <div id="${name}Main" style="display: flex;align-items: center;">
+                <div id=${name} style="font-size: 300%;">${innerHTML}</div>
+                    <div style="display: flex; flex-direction: column;align-items: flex-start;">
+                        <button onclick="select${name}(2)" ${isUpDisabled}>▲</button>
+                        <button onclick="select${name}(0)" ${isDownDisabled}>▼</button>
+                    </div>
+            </div>
+    `;
+        };
+    </script>
+</body>
+
+</html>

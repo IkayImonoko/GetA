@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 124 B,C,D</title>
+</head>
+
+<body>
+    <script>
+        function calulateFromCToF(temperature) {
+            return temperature * 9 / 5 + 32;
+        }
+        function calulateFromFToC(temperature) {
+            return (temperature - 32) * 5 / 9;
+        }
+        function calulateTemperature(temperature, prefix) {
+            if (prefix === 'C')
+                return temperature * 9 / 5 + 32;
+            else if (prefix === 'F')
+                return (temperature - 32) * 5 / 9;
+            else
+            console.log('Undefined prefix');
+        }
+    </script>
+</body>
+
+</html>
