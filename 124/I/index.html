@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 124 I</title>
+</head>
+
+<body>
+    <div id="app" style="display: flex"></div>
+    <script>
+        show();
+        function show() {
+            document.getElementById("app").innerHTML = /*HTML*/`
+            ${createNumberSelector(1, 1, 31, 'Day')}
+            ${createNumberSelector(1, 1, 12, 'Month')}
+            ${createNumberSelector(2000, 2000, 2025, 'Year')}
+        `;
+        };
+        function createNumberSelector(innerHTML, min, max, name) {
+            let isUpDisabled = '';
+            let isDownDisabled = '';
+            if (innerHTML <= min)
+                isDownDisabled = 'disabled';
+            else if (innerHTML >= max)
+                isUpDisabled = 'disabled';
+            return /*HTML*/ `
+            <div id="${name}Main" style="display: flex;align-items: center;">
+                <div id=${name} style="font-size: 300%;">${innerHTML}</div>
+                    <div style="display: flex; flex-direction: column;align-items: flex-start;">
+                        <button onclick="select${name}(${innerHTML+1})" ${isUpDisabled}>▲</button>
+                        <button onclick="select${name}(${innerHTML-1})" ${isDownDisabled}>▼</button>
+                    </div>
+            </div>
+    `;
+        };
+        function selectDay(day) {
+            document.getElementById('DayMain').outerHTML =
+                createNumberSelector(day, 1, 31, 'Day');
+        }
+
+        function selectMonth(month) {
+            document.getElementById('MonthMain').outerHTML =
+                createNumberSelector(month, 1, 12, 'Month');
+        }
+
+        function selectYear(year) {
+            document.getElementById('YearMain').outerHTML =
+                createNumberSelector(year, 2000, 2023, 'Year');
+        }
+
+        function getDate(){
+            let day = document.getElementById('Day').innerHTML;
+            let month = document.getElementById('Month').innerHTML;
+            let year = document.getElementById('Year').innerHTML;
+            return `${day}.${month}.${year}`
+        }
+    </script>
+</body>
+
+</html>
