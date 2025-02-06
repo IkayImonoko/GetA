@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 128 A</title>
+</head>
+
+<body onload="uppdateWiew()">
+    <div id="app"></div>
+    <script>
+        //model
+        let clickAmount = 0;
+        let update = 1;
+        //wiew
+        function uppdateWiew() {
+            document.getElementById('app').innerHTML = /*HTML*/ `
+                <div>click: ${clickAmount}</div>
+                <button onclick="handleClick()">Click</button><button onclick="handleUpdate()">Update</button>
+                <div>update: ${update}</div>
+            `;
+        }
+        //controller
+        function handleClick(){
+            clickAmount += update;
+            uppdateWiew();
+        }
+        function handleUpdate() {
+            if (clickAmount >= 10){
+                clickAmount -= 10;
+                update++;
+                uppdateWiew();
+            }
+        }
+    </script>
+</body>
+
+</html>
