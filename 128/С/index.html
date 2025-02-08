@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 128 B</title>
+</head>
+
+<body onload="resetView()">
+    <div id="app"></div>
+    <script>
+        //model
+        let secretNumber = getRandomNumber(1, 100);
+        let answer = '';
+        let attempts = 0;
+        //view
+        function resetView() {
+            document.getElementById('app').innerHTML = /*HTML*/ ` 
+            <label for="inputNumber">Guess a number from 1 to 100</label><br/>
+            <input id="inputNumber" type="number" min="1" max="100"
+            oninput="validity.valid || (value='');"><br/>
+            <button onclick="handleGuess()">Guess</button>
+            <button onclick="handleReset()">Reset</button><br/>
+            ${attempts} tryes <br/>
+            ${answer}
+            `;
+        }
+        //controller
+        function handleGuess() {
+            attempts++;
+            answer = document.getElementById('inputNumber').value == secretNumber ? "Hell yeah!" : 
+            document.getElementById('inputNumber').value > secretNumber ? "Too much!" : "Little more..";
+            resetView();
+        }
+        function getRandomNumber(min, max) {
+            return min + Math.floor(Math.random() * (max - min + 1));
+        }
+        function handleReset(){
+            secretNumber = getRandomNumber(1, 100);
+            answer = '';
+            attempts = 0;
+            resetView();
+        }
+    </script>
+</body>
+
+</html>
