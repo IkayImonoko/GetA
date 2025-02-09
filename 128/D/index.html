@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 128 D</title>
+</head>
+
+<body onload="updateView()">
+    <div id="app"></div>
+</body>
+<script>
+    //model
+    let message = 'Lets start!';
+    let playerScore = 0;
+    let computerScore = 0;
+    //view
+    function updateView() {
+        document.getElementById('app').innerHTML = /*HTML*/ `
+        ${message}<br/>
+        player scor: ${playerScore}<br/> computerScore: ${computerScore}<br/>
+        <button onclick="handleClick('Rock')">Rock</button>
+        <button onclick="handleClick('Papir')">Papir</button>
+        <button onclick="handleClick('Scissors')">Scissors</button>
+        `;
+    }
+    //controller
+    function returnWord() {
+        let number = getRandomNumber(1, 3);
+        return number == 1 ? "Rock" : (number == 2 ? "Papir" : "Scissors")
+    }
+    function getRandomNumber(min, max) {
+        return min + Math.floor(Math.random() * (max - min + 1));
+    }
+    function handleClick(playerWord) {
+        let computerWord = returnWord();
+        if (playerWord === 'Rock') {
+            if (computerWord === 'Rock') {
+                message = "Rock..... Tie!"
+            }
+            else if (computerWord === 'Papir') {
+                message = "Papir..... You lose, hahaha";
+                computerScore++;
+            }
+            else {
+                message = "Scissors..... Well done, will bit you next time";
+                playerScore++;
+            }
+        }
+        else if (playerWord === 'Papir') {
+            if (computerWord === 'Papir') {
+                message = "Papir..... Tie!"
+            }
+            else if (computerWord === 'Scissors') {
+                message = "Scissors..... You lose, hahaha";
+                computerScore++;
+            }
+            else {
+                message = "Rock..... Well done, will bit you next time";
+                playerScore++;
+            }
+        }
+        else {
+            if (computerWord === 'Scissors') {
+                message = "Scissors..... Tie!"
+            }
+            else if (computerWord === 'Rock') {
+                message = "Rock..... You lose, hahaha";
+                computerScore++;
+            }
+            else {
+                message = "papir..... Well done, will bit you next time";
+                playerScore++;
+            }
+        }
+        updateView();
+    }
+</script>
+
+</html>
