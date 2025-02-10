@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 128 E</title>
+    <style>
+        #app {
+            display: grid;
+            grid-template-columns: 200px 200px;
+            grid-template-rows: 200px 200px;
+        }
+
+        .cell {
+            background-color: gray;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body onload="updateView(selectedIndex)">
+    <div id="app"></div>
+</body>
+<script>
+    //model
+    let selectedIndex = getRandomNumber(0, 3);
+    //view
+    function updateView(selectedIndex) {
+        document.getElementById('app').innerHTML = /*HTML*/ `
+            <div onclick="handleClick(0)" id="0" class="cell"></div>
+            <div onclick="handleClick(1)" id="1" class="cell"></div>
+            <div onclick="handleClick(2)" id="2" class="cell"></div>
+            <div onclick="handleClick(3)" id="3" class="cell"></div>
+    `;
+        document.getElementById(selectedIndex).style.backgroundColor = "yellow";
+    }
+    //controller
+    function handleClick(clickedId) {
+        if (clickedId == selectedIndex) {
+            selectedIndex = getRandomNumber(0, 3);
+            updateView(selectedIndex);
+        }
+    }
+    function getRandomNumber(min, max) {
+        return min + Math.floor(Math.random() * (max - min + 1));
+    }
+
+</script>
+
+</html>
