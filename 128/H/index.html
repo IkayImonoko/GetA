@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 128 H</title>
+    <style>
+        .gridContainer {
+            display: grid;
+            grid-template-columns: repeat(4, 50px);
+            grid-template-rows: repeat(6, 50px);
+            grid-template-areas: "input input input input"
+                ". . . ."
+                ". . . ."
+                ". . . ."
+                ". . . ."
+                "reset reset reset reset";
+        }
+
+        .button {
+            display: flex;
+            background-color: aqua;
+            border: 1px solid black;
+            margin: 2px;
+            border-radius: 5px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .input {
+            grid-area: input;
+        }
+
+        .reset {
+            grid-area: reset;
+        }
+    </style>
+</head>
+
+<body onload="updateView()">
+    <div id="app">
+
+    </div>
+</body>
+<script>
+    //model
+    let inputShowvalue = 0
+    let stage0 = true;
+    let stage1 = false;
+    let stage2 = false;
+    let isComaUsed = false;
+    let firstValue = 0;
+    let secondValue = 0;
+    let operator = null;
+    //view
+
+    function updateView() {
+        document.getElementById('app').innerHTML = /*HTML*/ `
+        <div class="gridContainer">
+            <input class="input" value=${inputShowvalue}>
+            <div onclick="handleClick('7','digit')" class="button">7</div>
+            <div onclick="handleClick('8','digit')" class="button">8</div>
+            <div onclick="handleClick('9','digit')" class="button">9</div>
+            <div onclick="handleClick('*')" class="button">*</div>
+
+            <div onclick="handleClick('4','digit')" class="button">4</div>
+            <div onclick="handleClick('5','digit')" class="button">5</div>
+            <div onclick="handleClick('6','digit')" class="button">6</div>
+            <div onclick="handleClick('/','operator')" class="button">/</div>
+            
+            <div onclick="handleClick('1','digit')" class="button">1</div>
+            <div onclick="handleClick('2','digit')" class="button">2</div>
+            <div onclick="handleClick('3','digit')" class="button">3</div>
+            <div onclick="handleClick('.','coma')" class="button">,</div>
+            
+            <div onclick="handleClick('+','operator')" class="button">+</div>
+            <div onclick="handleClick('0','null')" class="button">0</div>
+            <div onclick="handleClick('-','operator')" class="button">-</div>
+            <div onclick="handleClick('=','equel')" class="button">=</div>
+            
+            <button class="reset" onclick="handleReset()">Reset</button>
+        </div>
+        `;
+    }
+    //controller
+    function handleClick(button, type) {
+
+        if (stage0) {
+            console.log('s0')
+            if (type === 'null' || type === 'equel') {
+                return
+            }
+            else {
+                stage0 = false;
+                stage1 = true;
+                if (type == 'digit') {
+                    setInputValue(button);
+                }
+                else if (type == 'coma') {
+                    if (!isComaUsed) {
+                        isComaUsed = true;
+                        addInputValue(button);
+                    }
+                }
+                else {
+                    operator = button;
+                    stage1 = false;
+                    stage2 = true;
+                }
+            }
+        }
+        else if (stage1) {
+            console.log('s1')
+            if (type === 'equel') {
+                return
+            }
+            else {
+                if (type == 'digit' || type == 'null') {
+                    addInputValue(button);
+                }
+                else if (type == 'coma') {
+                    if (!isComaUsed) {
+                        isComaUsed = true;
+                        addInputValue(button);
+                    }
+                }
+                else {
+                    firstValue = inputShowvalue;
+                    operator = button;
+                    setInputValue(0);
+                    stage1 = false;
+                    stage2 = true;
+                    isComaUsed = false;
+                }
+            }
+        }
+        else if (stage2) {
+            console.log('s2')
+            if (type === 'operator') {
+                return
+            }
+            else {
+
+                if (type == 'digit' || type == 'null') {
+                    if (inputShowvalue != 0) {
+                        addInputValue(button);
+                    }
+                    else {
+                        setInputValue(button);
+                    }
+                }
+                else if (type == 'coma') {
+                    if (!isComaUsed) {
+                        isComaUsed = true;
+                        addInputValue(button);
+                    }
+                }
+                else {
+                    secondValue = inputShowvalue;
+                    let reesultString = firstValue + operator + secondValue;
+                    setInputValue(eval(reesultString));
+                    stage2 = false;
+                    stage1 = true;
+                    firstValue = inputShowvalue;
+                    secondValue = 0;
+                    operator = null;
+                    if (Number.isInteger(firstValue)) {
+                        isComaUsed = false;
+                    }
+                    else {
+                        isComaUsed = true;
+                    }
+                }
+            }
+        }
+        updateView();
+    }
+
+    function setInputValue(newInputValue) {
+        inputShowvalue = newInputValue;
+    }
+
+    function addInputValue(additionalCharacter) {
+        inputShowvalue += additionalCharacter;
+    }
+
+    function handleReset() {
+        inputShowvalue = 0
+        stage0 = true;
+        stage1 = false;
+        stage2 = false;
+        isComaUsed = false;
+        firstValue = 0;
+        secondValue = 0;
+        operator = null;
+        updateView();
+    }
+</script>
+
+</html>
