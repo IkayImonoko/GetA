@@ -1,11 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oppgave 128 I</title>
 </head>
-<body>
-    
+
+<body onload="updateShow()">
+    <div id="app"></div>
+
+    <script>
+        let input1;
+        let input2;
+        let input3;
+        let message;
+        function updateShow() {
+            document.getElementById('app').innerHTML = /*HTML*/`
+            <input type="number" oninput="input1 = this.value">
+            <input type="number" oninput="input2 = this.value">
+            <input type="number" oninput="input3 = this.value">
+            <button onclick="compare()">Compare</button>
+            <div>${message ?? ''}</div>
+            `;
+         
+        }
+        function compare(){
+            message = returnBiggestNumberOfThree(input1, input2, input3);
+            updateShow();
+        }
+        function returnBiggestNumberOfThree(number1, number2, number3) {
+            let biggerNumber = number1 > number2 ? number1 : number2;
+            return biggerNumber > number3 ? biggerNumber : number3;
+        }
+    </script>
 </body>
+
 </html>
