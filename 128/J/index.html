@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 128 J</title>
+    <style>
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 200px);
+            grid-template-rows: repeat(3, 200px);
+            border: 3px solid black;
+            width: fit-content;
+            background-color: lightgrey;
+        }
+
+        .container div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 300%;
+            border: 1px solid black;
+            border-radius: 10px;
+            background-color: white;
+            margin: 1px;
+        }
+    </style>
+</head>
+
+<body onload="updateView()">
+    <div id="app"></div>
+    <script>
+        let board = " 13425786"
+        function updateView() {
+            document.getElementById("app").innerHTML = /*HTML*/`
+            <div class="container">
+                ${createSquerHtml(0)}
+                ${createSquerHtml(1)}
+                ${createSquerHtml(2)}
+                ${createSquerHtml(3)}
+                ${createSquerHtml(4)}
+                ${createSquerHtml(5)}
+                ${createSquerHtml(6)}
+                ${createSquerHtml(7)}
+                ${createSquerHtml(8)}
+            </div>
+            `;
+        }
+        function createSquerHtml(index) {
+            let style;
+            if (board.charAt(index) == ' ') style = 'style="background: transparent; border: transparent;"';
+            return /*HTML*/`<div onclick="swap(${index})" ${style ?? ''}>${board.charAt(index)}</div>`;
+        }
+        function swap(index) {
+            if (canISwap(index)) {
+                let selectedNumber = board.charAt(index);
+                board = board.replace(' ', 'x');
+                board = board.replace(selectedNumber, ' ');
+                board = board.replace('x', selectedNumber)
+                if (isIWin()) resetBoard();
+                updateView();
+            }
+        }
+        function isIWin() {
+            if (board === '12345678 ') return true
+            else return false
+        }
+        function resetBoard() {
+            board = " 13425786";
+        }
+        function canISwap(index) {
+            let blankIndex = board.indexOf(' ');
+            switch (blankIndex) {
+                case 0:
+                    if (index == 1 || index == 3) return true;
+                    else return false;
+                case 1:
+                    if (index == 0 || index == 2 || index == 4) return true;
+                    else return false;
+                case 2:
+                    if (index == 1 || index == 5) return true;
+                    else return false;
+                case 3:
+                    if (index == 0 || index == 6 || index == 4) return true;
+                    else return false;
+                case 4:
+                    if (index == 1 || index == 3 || index == 5 || index == 7) return true;
+                    else return false;
+                case 5:
+                    if (index == 8 || index == 2 || index == 4) return true;
+                    else return false;
+                case 6:
+                    if (index == 7 || index == 3) return true;
+                    else return false;
+                case 7:
+                    if (index == 8 || index == 6 || index == 4) return true;
+                    else return false;
+                case 8:
+                    if (index == 7 || index == 5) return true;
+                    else return false;
+            }
+        }
+    </script>
+</body>
+
+</html>
