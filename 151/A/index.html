@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 151 A</title>
+</head>
+<body onload="updateView()">
+    <div id="app"></div>
+    <script>
+        let textMaxLenght;
+        let textMessage = '';
+        //let resulMessage;
+        function updateView(){
+            document.getElementById('app').innerHTML = /*HTML*/`
+            <input type="text" oninput="textMessage = this.value"/>
+            <input type="number" oninput="textMaxLenght = this.valueAsNumber"/>
+            <button onclick="repeat()">Repeat</button>
+            ${textMessage ?? ''}
+            `;
+        }
+        function repeat(){
+            while (textMessage.length < textMaxLenght){
+                textMessage += textMessage;
+            }
+            updateView();
+        }
+    </script>
+</body>
+</html>
