@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 151 B</title>
+</head>
+
+<body onload="updateView()">
+    <div id="app"></div>
+    <script>
+        let start;
+        let end;
+        let change;
+        let result;
+        function updateView() {
+            document.getElementById('app').innerHTML = /*HTML*/`
+            <input type="number" oninput="start = this.valueAsNumber"/>Start<br/>
+            <input type="number" oninput="end = this.valueAsNumber"/>End<br/>
+            <input type="number" oninput="change = this.valueAsNumber"/>Chage<br/>
+            <button onclick="showResult()">Show result</button>
+            <div>${result ?? ''}</div>
+            `;
+        }
+        function showResult() {
+            if (change > 0) {
+            for (i = start; i < end; i += change) {
+                if (i == start) result = `${i}<br/>`;
+                else result += `${i}<br/>`;
+            }
+            updateView();
+        }
+        }
+    </script>
+</body>
+
+</html>
