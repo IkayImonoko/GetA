@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 151 C</title>
+</head>
+
+<body onload="updateView()">
+    <div id="app"></div>
+    <script>
+        let text;
+        function updateView() {
+            document.getElementById("app").innerHTML = /*HTML*/`
+            <input type="text" oninput="text=this.value"><br/>
+            <button onclick="updateView()">Reverse</button><br/>
+            ${createReversedText(text ?? '') ?? ''} 
+            `;
+        }
+        function createReversedText(inputText) {
+            let newstring = '';
+            for (i = inputText.length - 1; i >= 0; i--) {
+                newstring += inputText.charAt(i);
+            }
+            return newstring;
+        }
+    </script>
+</body>
+
+</html>
