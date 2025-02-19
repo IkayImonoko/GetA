@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 151 D</title>
+</head>
+<body onload="updateView()">
+    <div id="app"></div>
+    <script>
+        let text;
+        let later;
+        let aCounter=0;
+        function updateView() {
+            document.getElementById("app").innerHTML = /*HTML*/`
+            Count amount laters:<input type="text" oninput="later=this.value"><br/>
+            from this text: <input type="text" oninput="text=this.value"><br/>
+            <button onclick="handleClick()">Count</button><br/>
+            ${aCounter ?? ''} 
+            `;
+        }
+        function countACharacters(inputText, targetLater) {
+            for (i = 0; i < inputText.length; i++) {
+                if(inputText.charAt(i) === targetLater.toLowerCase() || inputText.charAt(i) === targetLater.toUpperCase())
+                aCounter+=1;
+            }
+        }
+        function handleClick(){
+            aCounter=0;
+            countACharacters(text, later);
+            updateView();
+        }
+    </script>
+</body>
+</html>
