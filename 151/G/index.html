@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 151 G</title>
+</head>
+
+<body>
+    <pre id="output"></pre>
+    <script>
+
+        for (i = 0; i < 5; i++) {
+            for(k=i; k>0; k--){
+                writeSpace();
+            }
+            for (j = 8 - 2 * i; j > 0; j--) {
+                writeHash();
+
+            }
+            writeLineBreak();
+        }
+
+        function writeHash() {
+            document.getElementById('output').innerText += '#';
+        }
+
+        function writeSpace() {
+            document.getElementById('output').innerText += ' ';
+        }
+
+        function writeLineBreak() {
+            document.getElementById('output').innerText += '\n';
+        }
+    </script>
+</body>
+
+</html>
