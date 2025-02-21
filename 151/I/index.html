@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 151 I</title>
+</head>
+
+<body>
+    <pre id="output"></pre>
+    <script>
+
+        let width = 14;
+        let height = 8;
+        let leftSpaces = 0;
+        let hashes = 0;
+        let middleSpaces = 0;
+
+        for (j = 0; j < height; j++) {
+            if (j < height / 2) {
+                leftSpaces = j;
+                hashes = j + 1;
+            }
+            else {
+                leftSpaces = height - 1 - j;
+                hashes = height - j;
+            }
+            middleSpaces = width - 2 * (leftSpaces + hashes);
+            for (a = 0; a < leftSpaces; a++) {
+                writeSpace();
+            }
+            for (b = 0; b < hashes; b++) {
+                writeHash();
+            }
+            for (c = 0; c < middleSpaces; c++) {
+                writeSpace();
+            }
+            for (d = 0; d < hashes; d++) {
+                writeHash();
+            }
+            writeLineBreak();
+        }
+
+        function writeHash() {
+            document.getElementById('output').innerText += '#';
+        }
+
+        function writeSpace() {
+            document.getElementById('output').innerText += ' ';
+        }
+
+        function writeLineBreak() {
+            document.getElementById('output').innerText += '\n';
+        }
+    </script>
+</body>
+
+</html>
