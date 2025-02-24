@@ -4,16 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oppgave 151 J</title>
+    <style>
+        .outputWindow{
+            display: block;
+            width: 400px;
+            height: 250px;
+            background-color: aquamarine;
+            border: 1px solid black;
+        }
+    </style>
 </head>
-<body>
+<body onload="updateView()">
     <div id="app"></div>
     <script>
         //  model
+        let text;
+        let wordsAmount;
         //  view
         function updateView(){
-            document.getElementById("app").innerHTML = /*HTML*/``;
+            document.getElementById("app").innerHTML = /*HTML*/`
+            <input type="text" oninput="text=this.value"/> < Input text <br/>
+            <button onclick="handleClick()">Analize the text</button>
+            <div class="outputWindow">
+                Amount words: ${wordsAmount ?? ''}<br/>
+                The longest word: <br/>
+                The word with most vowels:    
+            <div>
+            `;
+        }
+        function countWords(text){
+            text.trim();
+            let words = text.split(" ");
+            return words.length;
         }
         //  controller
+        function handleClick(){
+            wordsAmount = countWords(text);
+            updateView();
+        }
     </script>
 </body>
 </html>
