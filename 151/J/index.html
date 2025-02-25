@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oppgave 151 J</title>
     <style>
-        .outputWindow{
+        .outputWindow {
             display: block;
             width: 400px;
             height: 250px;
@@ -14,34 +15,69 @@
         }
     </style>
 </head>
+
 <body onload="updateView()">
     <div id="app"></div>
     <script>
         //  model
         let text;
         let wordsAmount;
+        let longestWord;
+        let mostVowelsWord;
         //  view
-        function updateView(){
+        function updateView() {
             document.getElementById("app").innerHTML = /*HTML*/`
             <input type="text" oninput="text=this.value"/> < Input text <br/>
             <button onclick="handleClick()">Analize the text</button>
             <div class="outputWindow">
                 Amount words: ${wordsAmount ?? ''}<br/>
-                The longest word: <br/>
-                The word with most vowels:    
+                The longest word: "${longestWord ?? ''}"<br/>
+                The word with most vowels: "${mostVowelsWord ?? ''}"   
             <div>
             `;
         }
-        function countWords(text){
+
+        //  controller
+        function handleClick() {
+            wordsAmount = countWords(text);
+            longestWord = findeLongestWord(text);
+            mostVowelsWord = findMostVowelsWord(text);
+            updateView();
+        }
+        function countWords(text) {
             text.trim();
             let words = text.split(" ");
             return words.length;
         }
-        //  controller
-        function handleClick(){
-            wordsAmount = countWords(text);
-            updateView();
+        function findeLongestWord(text) {
+            let words = text.split(" ");
+            let findedLongestWord = words[0];
+            for (let i = 1; i < words.length; i++) {
+                if (words[i].length > findedLongestWord.length) {
+                    findedLongestWord = words[i];
+                }
+            }
+            return findedLongestWord;
+        }
+        function findMostVowelsWord(text) {
+            let words = text.toLowerCase().split(" ");
+            let findedtWord;
+            let vowelsAmount = 0;
+            for (let i = 0; i < words.length; i++) {
+                let curentVawels = 0;
+                for (let j = 0; j < words[i].length; j++) {
+                    if (words[i].charAt(j) === 'a' || words[i].charAt(j) === 'i' || words[i].charAt(j) === 'u' || words[i].charAt(j) === 'e' || words[i].charAt(j) === 'o' || words[i].charAt(j) === 'y') {
+                        curentVawels++;
+                    }
+                }
+                if (curentVawels > vowelsAmount) {
+                    vowelsAmount = curentVawels;
+                    findedtWord = words[i];
+                }
+            }
+            return findedtWord;
         }
     </script>
 </body>
+
 </html>
