@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .game-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        .tower-container {
+            position: relative;
+        }
+
+        .tower {
+            width: 100px;
+            height: 120px;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            border-bottom: 8px solid darkred;
+        }
+
+        .tower-container::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 120px;
+            z-index: -10;
+            background-color: darkred;
+        }
+
+        .disk {
+            width: 20px;
+            height: 20px;
+            background-color: blue;
+            border: 4px solid gray;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+    </div>
+
+    <script>
+        // model
+        //   hvor er diskene, 0 = venstre tårn, 1 = midten, 2 = høyre
+        //   alle starter til venstre
+        let leftTower = 0;
+        let centralTower = 1;
+        let rightTower = 2;
+        let smallDiskTowerIndex = 0;
+        let mediumDiskTowerIndex = 0;
+        let largeDiskTowerIndex = 0;
+
+
+        // view 
+        updateView();
+        function updateView() {
+
+            document.getElementById('app').innerHTML = /*HTML*/`
+                <div class="game-container">
+                    ${createTowerHtml(leftTower)}
+                    ${createTowerHtml(centralTower)}
+                    ${createTowerHtml(rightTower)}
+                </div>
+                Flytt liten disk til 
+               ${createSmallButtonHtml(0)}
+                ${createSmallButtonHtml(1)}
+                ${createSmallButtonHtml(2)}
+                <br/>
+                Flytt medium disk til
+               ${createMediumButtonHtml(0)}
+                ${createMediumButtonHtml(1)}
+                ${createMediumButtonHtml(2)}
+                <br/>
+                Flytt stor disk til
+                ${createLargeButtonHtml(0)}
+                ${createLargeButtonHtml(1)}
+                ${createLargeButtonHtml(2)}
+                <br/>
+                <button onclick="restartGame()">New Game</button>
+            `;
+            checkIsFinished();
+        }
+
+        // controller
+        function restartGame() {
+            smallDiskTowerIndex = 0;
+            mediumDiskTowerIndex = 0;
+            largeDiskTowerIndex = 0;
+            updateView();
+        }
+        function checkIsFinished() {
+            if (smallDiskTowerIndex == 2 && mediumDiskTowerIndex == 2 && largeDiskTowerIndex == 2) {
+                alert('You win !!!');
+            }
+        }
+        function moveDisk(disk, toTowerIndex) {
+            if (disk == 'small') {
+                smallDiskTowerIndex = toTowerIndex;
+            }
+            else if (disk == 'medium') {
+                if (smallDiskTowerIndex != toTowerIndex) {
+                    mediumDiskTowerIndex = toTowerIndex;
+
+                }
+            }
+            else if (disk == 'large') {
+                if (mediumDiskTowerIndex != toTowerIndex && smallDiskTowerIndex != toTowerIndex) {
+                    largeDiskTowerIndex = toTowerIndex;
+                }
+
+            }
+            updateView();
+        }
+
+        // function moveSmallDisk(toTowerIndex) {
+        //     smallDiskTowerIndex = toTowerIndex;
+        //     updateView();
+
+        // }
+
+        // function moveMediumDisk(toTowerIndex) {
+        //     if (smallDiskTowerIndex != toTowerIndex) {
+        //         mediumDiskTowerIndex = toTowerIndex;
+        //         updateView();
+
+        //     }
+        // }
+
+        // function moveLargeDisk(toTowerIndex) {
+        //     if (mediumDiskTowerIndex != toTowerIndex && smallDiskTowerIndex != toTowerIndex) {
+        //         largeDiskTowerIndex = toTowerIndex;
+        //         updateView();
+        //     }
+
+        // }
+        function createDiskHtml(width) {
+            return `<div class="disk" style="width: ${width}px"></div>`
+        }
+        function createTowerHtml(towerIndex) {
+            let towerHtml = `<div class="tower-container"><div class="tower">`;
+            if (largeDiskTowerIndex == towerIndex)
+                towerHtml += createDiskHtml(70);
+            if (mediumDiskTowerIndex == towerIndex)
+                towerHtml += createDiskHtml(50);
+            if (smallDiskTowerIndex == towerIndex)
+                towerHtml += createDiskHtml(30);
+            towerHtml += `</div></div>`
+            return towerHtml;
+        }
+        function createButtonHtml(diskSize, toTowerIndex) {
+            let towerPosition;
+            let disabled = '';
+
+            return `<button onclick="moveDisk(${diskSize},${toTowerIndex})" ${disabled}>${towerPosition} tårn</button>`
+        }
+        function canMove() {
+
+
+        }
+        function createSmallButtonHtml(toTowerIndex) {
+            let towerPosition;
+            let disabled = '';
+            if (smallDiskTowerIndex == toTowerIndex) {
+                disabled = 'disabled';
+            }
+            if (toTowerIndex == 0) {
+                towerPosition = 'venstre';
+            }
+            else if (toTowerIndex == 1) {
+                towerPosition = 'midtre';
+            }
+            else {
+                towerPosition = 'høyre';
+            }
+            return `<button onclick="moveDisk('small',${toTowerIndex})" ${disabled}>${towerPosition} tårn</button>`
+        }
+        function createMediumButtonHtml(toTowerIndex) {
+            let towerPosition;
+            let disabled = '';
+            if (mediumDiskTowerIndex == toTowerIndex ||
+                mediumDiskTowerIndex == smallDiskTowerIndex ||
+                smallDiskTowerIndex == toTowerIndex) {
+                disabled = 'disabled';
+            }
+            if (toTowerIndex == 0) {
+                towerPosition = 'venstre';
+            }
+            else if (toTowerIndex == 1) {
+                towerPosition = 'midtre';
+            }
+            else {
+                towerPosition = 'høyre';
+            }
+            return `<button onclick="moveDisk('medium',${toTowerIndex})" ${disabled}>${towerPosition} tårn</button>`
+        }
+        function createLargeButtonHtml(toTowerIndex) {
+            let towerPosition;
+            let disabled = '';
+            if (largeDiskTowerIndex == toTowerIndex ||
+                largeDiskTowerIndex == mediumDiskTowerIndex ||
+                largeDiskTowerIndex == smallDiskTowerIndex ||
+                smallDiskTowerIndex == toTowerIndex ||
+                mediumDiskTowerIndex == toTowerIndex) {
+                disabled = 'disabled';
+            }
+            if (toTowerIndex == 0) {
+                towerPosition = 'venstre';
+            }
+            else if (toTowerIndex == 1) {
+                towerPosition = 'midtre';
+            }
+            else {
+                towerPosition = 'høyre';
+            }
+            return `<button onclick="moveDisk('large',${toTowerIndex})" ${disabled}>${towerPosition} tårn</button>`
+        }
+
+        document.body.innerHTML += `
+            <h4>Oppgaver</h4>
+            Disse oppgavene er ment å løses med kun funks
+            joner, variabler, operatorer, if-setninger og MVC. Man trenger
+            ikke bruke løkker eller lister.
+            <ol>
+                <li>
+                    Studer spillet her: <a href="https://www.mathsisfun.com/games/towerofhanoi.html">mathsisfun.com/games/towerofhanoi.html</a>
+                    og sørg for at dere forstår reglene. 
+                </li>
+                <li>
+                    Sørg for at <tt>updateView()</tt> tegner opp diskene ut fra innholdet av variablene i modellen.
+                    Merk at pga <tt>display: flex</tt> og <tt>flex-direction: column-reverse</tt> må dere legge til 
+                    diskene i motsatt rekkefølge av ellers. Den siste taggen inne i hvert tårn kommer øverst
+                </li>
+                <li>
+                    Implementer aller enkleste versjon av controller-funksjonene, nemlig å flytte hver disk uten å sjekke om det er lov
+                    eller ikke. Sjekk at det virker før dere går videre. 
+                </li>
+                <li>
+                    Implementer så reglene. Du kan ikke flytte en disk til et tårn om det alt ligger en disk der som er mindre.                
+                </li>
+                <li>
+                    Skjul alltid knappene som flytter en disk dit den allerede er. Skjul også knappene som er ulovlige å utføre.
+                </li>
+                <li>
+                    Vis en melding på skjermen hvis spillet er løst, det vil si at alle diskene er på høyre tårn. Vis i det
+                    tilfellet en knapp for å starte spillet på nytt. 
+                </li>
+            </ol>
+        `;
+    </script>
+</body>
+
+</html>
