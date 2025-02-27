@@ -56,13 +56,19 @@
         // model
         //   hvor er diskene, 0 = venstre tårn, 1 = midten, 2 = høyre
         //   alle starter til venstre
+        let small = 30;
+        let medium = 50;
+        let large = 70;
+
         let leftTower = 0;
         let centralTower = 1;
         let rightTower = 2;
-        let smallDiskTowerIndex = 0;
-        let mediumDiskTowerIndex = 0;
-        let largeDiskTowerIndex = 0;
 
+        let smallDiskLocation = leftTower;
+        let mediumDiskLocation = leftTower;
+        let largeDiskLocation = leftTower;
+
+        let GameOverMessage = '';
 
         // view 
         updateView();
@@ -75,105 +81,124 @@
                     ${createTowerHtml(rightTower)}
                 </div>
                 Flytt liten disk til 
-               ${createSmallButtonHtml(0)}
-                ${createSmallButtonHtml(1)}
-                ${createSmallButtonHtml(2)}
+               ${createButtonHtml('small', leftTower)}
+                ${createButtonHtml('small', centralTower)}
+                ${createButtonHtml('small', rightTower)}
                 <br/>
                 Flytt medium disk til
-               ${createMediumButtonHtml(0)}
-                ${createMediumButtonHtml(1)}
-                ${createMediumButtonHtml(2)}
+                ${createButtonHtml('medium', leftTower)}
+                ${createButtonHtml('medium', centralTower)}
+                ${createButtonHtml('medium', rightTower)}
                 <br/>
                 Flytt stor disk til
-                ${createLargeButtonHtml(0)}
-                ${createLargeButtonHtml(1)}
-                ${createLargeButtonHtml(2)}
+                ${createButtonHtml('large', leftTower)}
+                ${createButtonHtml('large', centralTower)}
+                ${createButtonHtml('large', rightTower)}
                 <br/>
                 <button onclick="restartGame()">New Game</button>
+                <div>${GameOverMessage ?? ''}</div>
             `;
-            checkIsFinished();
         }
 
         // controller
         function restartGame() {
-            smallDiskTowerIndex = 0;
-            mediumDiskTowerIndex = 0;
-            largeDiskTowerIndex = 0;
+            smallDiskLocation = leftTower;
+            mediumDiskLocation = leftTower;
+            largeDiskLocation = leftTower;
+            GameOverMessage = '';
             updateView();
         }
         function checkIsFinished() {
-            if (smallDiskTowerIndex == 2 && mediumDiskTowerIndex == 2 && largeDiskTowerIndex == 2) {
-                alert('You win !!!');
+            if (smallDiskLocation == rightTower &&
+                mediumDiskLocation == rightTower &&
+                largeDiskLocation == rightTower) {
+                GameOverMessage = "Congratulations with your grate victory!";
             }
         }
-        function moveDisk(disk, toTowerIndex) {
-            if (disk == 'small') {
-                smallDiskTowerIndex = toTowerIndex;
+        function moveDisk(diskType, destinationTower) {
+            if (diskType == 'small') {
+                smallDiskLocation = destinationTower;
             }
-            else if (disk == 'medium') {
-                if (smallDiskTowerIndex != toTowerIndex) {
-                    mediumDiskTowerIndex = toTowerIndex;
-
+            else if (diskType == 'medium') {
+                if (smallDiskLocation != destinationTower) {
+                    mediumDiskLocation = destinationTower;
                 }
             }
-            else if (disk == 'large') {
-                if (mediumDiskTowerIndex != toTowerIndex && smallDiskTowerIndex != toTowerIndex) {
-                    largeDiskTowerIndex = toTowerIndex;
+            else if (diskType == 'large') {
+                if (mediumDiskLocation != destinationTower &&
+                    smallDiskLocation != destinationTower) {
+                    largeDiskLocation = destinationTower;
                 }
-
             }
+            checkIsFinished();
             updateView();
         }
 
-        // function moveSmallDisk(toTowerIndex) {
-        //     smallDiskTowerIndex = toTowerIndex;
-        //     updateView();
-
-        // }
-
-        // function moveMediumDisk(toTowerIndex) {
-        //     if (smallDiskTowerIndex != toTowerIndex) {
-        //         mediumDiskTowerIndex = toTowerIndex;
-        //         updateView();
-
-        //     }
-        // }
-
-        // function moveLargeDisk(toTowerIndex) {
-        //     if (mediumDiskTowerIndex != toTowerIndex && smallDiskTowerIndex != toTowerIndex) {
-        //         largeDiskTowerIndex = toTowerIndex;
-        //         updateView();
-        //     }
-
-        // }
-        function createDiskHtml(width) {
-            return `<div class="disk" style="width: ${width}px"></div>`
+        function createDiskHtml(diskSize) {
+            return `<div class="disk" style="width: ${diskSize}px"></div>`
         }
-        function createTowerHtml(towerIndex) {
+        function createTowerHtml(towerLocation) {
             let towerHtml = `<div class="tower-container"><div class="tower">`;
-            if (largeDiskTowerIndex == towerIndex)
-                towerHtml += createDiskHtml(70);
-            if (mediumDiskTowerIndex == towerIndex)
-                towerHtml += createDiskHtml(50);
-            if (smallDiskTowerIndex == towerIndex)
-                towerHtml += createDiskHtml(30);
+            if (largeDiskLocation == towerLocation)
+                towerHtml += createDiskHtml(large);
+            if (mediumDiskLocation == towerLocation)
+                towerHtml += createDiskHtml(medium);
+            if (smallDiskLocation == towerLocation)
+                towerHtml += createDiskHtml(small);
             towerHtml += `</div></div>`
             return towerHtml;
         }
-        function createButtonHtml(diskSize, toTowerIndex) {
+        function createButtonHtml(diskType, destinationTower) {
+
+            let disabled = '';
+            if (!canMove(diskType, destinationTower)) {
+                disabled = 'disabled';
+            }
+
+            return `<button onclick="moveDisk('${diskType}',${destinationTower})" ${disabled}>
+                    ${returnTowerLocationInNorwegian(destinationTower)} tårn
+                    </button>`
+        }
+        function returnTowerLocationInNorwegian(towerIndex) {
+            if (towerIndex == 0) {
+                return 'venstre';
+            }
+            else if (towerIndex == 1) {
+                return 'midtre';
+            }
+            else if (towerIndex == 2) {
+                return 'høyre';
+            }
+        }
+        function canMove(diskType, destinationTower) {
+            if (diskType == 'small') {
+                if (smallDiskLocation != destinationTower) {
+                    return true;
+                }
+            }
+            else if (diskType == 'medium') {
+                if (mediumDiskLocation != destinationTower &&
+                    mediumDiskLocation != smallDiskLocation &&
+                    smallDiskLocation != destinationTower) {
+                    return true;
+                }
+            }
+            else if (diskType == 'large') {
+                if (largeDiskLocation != destinationTower &&
+                    largeDiskLocation != mediumDiskLocation &&
+                    largeDiskLocation != smallDiskLocation &&
+                    smallDiskLocation != destinationTower &&
+                    mediumDiskLocation != destinationTower) {
+                    return true;
+                }
+            }
+            else return false;
+
+        }
+      /*  function createSmallButtonHtml(toTowerIndex) {
             let towerPosition;
             let disabled = '';
-
-            return `<button onclick="moveDisk(${diskSize},${toTowerIndex})" ${disabled}>${towerPosition} tårn</button>`
-        }
-        function canMove() {
-
-
-        }
-        function createSmallButtonHtml(toTowerIndex) {
-            let towerPosition;
-            let disabled = '';
-            if (smallDiskTowerIndex == toTowerIndex) {
+            if (smallDiskLocation == toTowerIndex) {
                 disabled = 'disabled';
             }
             if (toTowerIndex == 0) {
@@ -190,9 +215,9 @@
         function createMediumButtonHtml(toTowerIndex) {
             let towerPosition;
             let disabled = '';
-            if (mediumDiskTowerIndex == toTowerIndex ||
-                mediumDiskTowerIndex == smallDiskTowerIndex ||
-                smallDiskTowerIndex == toTowerIndex) {
+            if (mediumDiskLocation == toTowerIndex ||
+                mediumDiskLocation == smallDiskLocation ||
+                smallDiskLocation == toTowerIndex) {
                 disabled = 'disabled';
             }
             if (toTowerIndex == 0) {
@@ -209,11 +234,11 @@
         function createLargeButtonHtml(toTowerIndex) {
             let towerPosition;
             let disabled = '';
-            if (largeDiskTowerIndex == toTowerIndex ||
-                largeDiskTowerIndex == mediumDiskTowerIndex ||
-                largeDiskTowerIndex == smallDiskTowerIndex ||
-                smallDiskTowerIndex == toTowerIndex ||
-                mediumDiskTowerIndex == toTowerIndex) {
+            if (largeDiskLocation == toTowerIndex ||
+                largeDiskLocation == mediumDiskLocation ||
+                largeDiskLocation == smallDiskLocation ||
+                smallDiskLocation == toTowerIndex ||
+                mediumDiskLocation == toTowerIndex) {
                 disabled = 'disabled';
             }
             if (toTowerIndex == 0) {
@@ -226,7 +251,7 @@
                 towerPosition = 'høyre';
             }
             return `<button onclick="moveDisk('large',${toTowerIndex})" ${disabled}>${towerPosition} tårn</button>`
-        }
+        }*/
 
         document.body.innerHTML += `
             <h4>Oppgaver</h4>
