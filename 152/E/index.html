@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 152 E</title>
+</head>
+
+<body>
+    <script>
+        let testArrey1 = [0, 1, 2, 3, 4, 5];
+        let testArrey2 = [5, 4, 3, 2, 1, 0];
+        let testArrey3 = [4, 5, 1, 2, 3, 0];
+        let testArrey4 = [0, 1, 2, 3, 4, 3];
+
+        let increaseFunction = function chekIncreasing(first, second) {
+            return first < second;
+        }
+
+        let decreaseFunction = function chekDecreaseing(first, second) {
+            return first > second;
+        }
+
+        function chekIsArraySorted(arrayOfNumbers) {
+            let compareFunction;
+
+            if (arrayOfNumbers[0] > arrayOfNumbers[1]) {
+                compareFunction = decreaseFunction;
+            }
+            else {
+                compareFunction = increaseFunction;
+            }
+
+
+            for (let i = 0; i < arrayOfNumbers.length - 1; i++) {
+                if (!compareFunction(arrayOfNumbers[i], arrayOfNumbers[i + 1])) {
+                    
+                    return false;
+                }
+            }
+
+
+            return true;
+        }
+
+
+
+    </script>
+</body>
+
+</html>
