@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 153 A</title>
+</head>
+
+<body onload="updateView()">
+    <div id="app"></div>
+
+    <script>
+        let numbers = createNumbers(0, 10000, 1);
+        let links = createLinks(1, 13);
+        let startIndex = 0;
+        //let startlink = 0;
+
+        //let step;
+
+        function updateView() {
+            document.getElementById('app').innerHTML = /*HTML*/`
+                <div>${numbers.slice(startIndex, startIndex + 10)}</div>
+                <div>${links}</div>
+            `;
+        }
+
+
+        function createNumbers(startNumber, endNumber, step) {
+            let numbers = [];
+            for (let i = startNumber; i <= endNumber; i += step) {
+                numbers.push(i);
+            }
+
+            return numbers;
+        }
+
+        function createLinks(startLink, endLink) {
+            let links = [];
+            for (let i = startLink; i <= endLink; i++) {
+                links.push(`<a href="#" onclick="showPage(${i})">${i}</a>`);
+            }
+            return links;
+        }
+
+        function showPage(page) {
+            startIndex = 10 * (page - 1);
+            updateView();
+        }
+    </script>
+</body>
+
+</html>
