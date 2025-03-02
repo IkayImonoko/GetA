@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oppgave 153 A</title>
+    <title>Oppgave 153 A,B</title>
 </head>
 
 <body onload="updateView()">
@@ -14,14 +14,18 @@
         let numbers = createNumbers(0, 10000, 1);
         let links = createLinks(1, 13);
         let startIndex = 0;
+        let filetType = 'all';
         //let startlink = 0;
 
         //let step;
 
         function updateView() {
             document.getElementById('app').innerHTML = /*HTML*/`
-                <div>${numbers.slice(startIndex, startIndex + 10)}</div>
+                <div>${filterNumbers(numbers.slice(startIndex, startIndex + 10), filetType)}</div>
                 <div>${links}</div>
+                <button onclick="show('odd')">Show odd</button>
+                <button onclick="show('even')">Show even</button>
+                <button onclick="show('all')">Show all</button>
             `;
         }
 
@@ -45,6 +49,29 @@
 
         function showPage(page) {
             startIndex = 10 * (page - 1);
+            updateView();
+        }
+
+        function filterNumbers(numbers, filterType) {
+            if(filterType == 'all'){
+
+                return numbers;
+            }
+
+            let filteredNumbers = [];
+            for (let number of numbers) {
+                if (filterType == 'odd') {
+                    if (number%2 != 0) filteredNumbers.push(number);
+                }
+                if (filterType == 'even') {
+                    if (number%2 == 0) filteredNumbers.push(number);
+                }
+            }
+            return filteredNumbers;
+        }
+
+        function show(newFilterType){
+            filetType = newFilterType;
             updateView();
         }
     </script>
