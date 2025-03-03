@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 153 C</title>
+</head>
+
+<body>
+    <script>
+        let alfabet = "ABCDEFGHIJKLMOPQRSTUVWXYZÆØÅ";
+        let secretKode = "ÅØÆYUOIEABCDFGHJKLMPQRSTVWXZ";
+
+        function incriptText(text) {
+            let incriptedText = '';
+            for (let leter of text) {
+                incriptedText += secretKode.charAt(alfabet.indexOf(leter));
+            }
+            return incriptedText;
+        }
+    </script>
+</body>
+
+</html>
