@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oppgave 153 C</title>
+    <title>Oppgave 153 C,D</title>
 </head>
 
 <body>
@@ -18,6 +18,14 @@
                 incriptedText += secretKode.charAt(alfabet.indexOf(leter));
             }
             return incriptedText;
+        }
+
+        function decriptText(text){
+            let decriptedText = '';
+            for (let leter of text) {
+                decriptedText += alfabet.charAt(secretKode.indexOf(leter));
+            }
+            return decriptedText;
         }
     </script>
 </body>
