@@ -27,6 +27,14 @@
             }
             return decriptedText;
         }
+
+        function replaceLeters(text, alfabet, secretKode){
+            let resultText = '';
+            for (let leter of text) {
+                resultText += secretKode.charAt(alfabet.indexOf(leter));
+            }
+            return resultText;
+        }
     </script>
 </body>
 
