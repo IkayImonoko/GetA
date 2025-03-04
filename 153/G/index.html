@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 153 G</title>
+</head>
+
+<body>
+    <script>
+        let testArray = [1, 4, 3, 4, 4, 1, 4];
+        function createFrequencyTable(numbers) {
+            let tabel = [];
+            for (let i = 0; i <= findBigestnumber(numbers); i++) {
+                tabel.push(0);
+            }
+            for (let number of numbers) {
+                tabel[number] += 1;
+            }
+            return tabel;
+        }
+
+        function findBigestnumber(numbers) {
+            let bigest = 0;
+            for (number of numbers) {
+                if (number > bigest) {
+                    bigest = number;
+                }
+            }
+            return bigest;
+        }
+    </script>
+</body>
+
+</html>
