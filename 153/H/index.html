@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oppgave 153 H</title>
 </head>
+
 <body>
     <script>
-        function findMostFrequentNumber(numbers){
-
+        let testNumbers = [4, 4, 4, 5, 12, 8, 9, 0, 12, 11, 3];
+        function findMostFrequentNumber(numbers) {
+            let frequencyTable = [];
+            for (let number of numbers) {
+                if (frequencyTable.length <= number) {
+                    let tempTable = new Array(number+1).fill(0);
+                    frequencyTable = frequencyTable.concat(tempTable.slice(frequencyTable.length))
+                }
+                frequencyTable[number]++;
+            }
+            return frequencyTable;
         }
     </script>
 </body>
+
 </html>
