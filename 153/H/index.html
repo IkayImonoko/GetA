@@ -9,17 +9,25 @@
 
 <body>
     <script>
-        let testNumbers = [4, 4, 4, 5, 12, 8, 9, 0, 12, 11, 3];
+        let testNumbers = [4, 4, 4, 5, 12, 8, 9, 0, 12, 11, 3, 71, 71, 71, 71];
         function findMostFrequentNumber(numbers) {
             let frequencyTable = [];
             for (let number of numbers) {
                 if (frequencyTable.length <= number) {
-                    let tempTable = new Array(number+1).fill(0);
+                    let tempTable = new Array(number + 1).fill(0);
                     frequencyTable = frequencyTable.concat(tempTable.slice(frequencyTable.length))
                 }
                 frequencyTable[number]++;
             }
-            return frequencyTable;
+            let bigestNumberIndex = 0;
+            for (let index in frequencyTable) {
+                for (let index in frequencyTable) {
+                    if (frequencyTable[index] > frequencyTable[bigestNumberIndex]) {
+                        bigestNumberIndex = index;
+                    }
+                }
+            }
+            return bigestNumberIndex;
         }
     </script>
 </body>
