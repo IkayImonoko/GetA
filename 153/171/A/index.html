@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 171 A</title>
+</head>
+
+<body>
+    <script>
+        const color = {
+            red: 123,
+            green: 15,
+            blue: 200
+        }
+
+        const color2 = {
+            red: 11,
+            green: 98,
+            blue: 20
+        }
+        
+        addColorfullDivInBody(color);
+        addColorfullDivInBody(color2);
+        function addColorfullDivInBody(backgroundColor) {
+            document.body.innerHTML +=/*HTML*/`
+                <div style="width: 50px; height: 50px; background-color: rgb(${backgroundColor.red}, ${backgroundColor.green}, ${backgroundColor.blue})"></div>
+            `;
+        }
+    </script>
+</body>
+
+</html>
