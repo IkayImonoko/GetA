@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 171 B</title>
+</head>
+
+<body>
+    <script>
+        const color = {
+            red: 0,
+            green: 255,
+            blue: 0
+        }
+        inverseColor(color);
+        function inverseColor(rgbColor) {
+            const inversedColor = {
+                red: 255 - rgbColor.red,
+                green: 255 - rgbColor.green,
+                blue: 255 - rgbColor.blue
+            }
+            document.body.innerHTML +=/*HTML*/`
+                <div style="width: 50px; height: 50px; background-color: rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})"></div>
+                <div style="width: 50px; height: 50px; background-color: rgb(${inversedColor.red}, ${inversedColor.green}, ${inversedColor.blue})"></div>
+            `;
+        }
+    </script>
+</body>
+
+</html>
