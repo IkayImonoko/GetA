@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 171 C</title>
+</head>
+
+<body>
+    <script>
+        const testColor1 = {
+            red: 45,
+            green: 7,
+            blue: 12
+        };
+        const testColor2 = {
+            red: 31,
+            green: 14,
+            blue: 82
+        };
+        function getAverageColor(color1, color2) {
+            const averageColor = {
+                red: (color1.red + color2.red) / 2,
+                green: (color1.green + color2.green) / 2,
+                blue: (color1.blue + color2.blue) / 2
+            }
+            return averageColor;
+        }
+
+        document.body.innerHTML +=/*HTML*/`
+                <div style="width: 50px; height: 50px; background-color: rgb(${getAverageColor(testColor1, testColor2).red}, ${getAverageColor(testColor1, testColor2).green}, ${getAverageColor(testColor1, testColor2).blue})"></div>
+               
+            `;
+    </script>
+</body>
+
+</html>
