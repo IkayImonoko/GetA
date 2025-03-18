@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 171 D</title>
+</head>
+
+<body>
+    <script>
+        const testColor1 = {
+            red: 13,
+            green: 4,
+            blue: 100
+        };
+
+        function getGradientColors(basicColor) {
+
+            const invertedColor = {
+                red: 255 - basicColor.red,
+                green: 255 - basicColor.green,
+                blue: 255 - basicColor.blue,
+                
+            }
+   
+            const averageColor = {
+                red: (basicColor.red + invertedColor.red) / 2,
+                green: (basicColor.green + invertedColor.green) / 2,
+                blue: (basicColor.blue + invertedColor.blue) / 2
+            }
+
+            const color2 = {
+                red: (basicColor.red + averageColor.red) / 2,
+                green: (basicColor.green + averageColor.green) / 2,
+                blue: (basicColor.blue + averageColor.blue) / 2
+            }
+
+
+            const color4 = {
+                red: (invertedColor.red + averageColor.red) / 2,
+                green: (invertedColor.green + averageColor.green) / 2,
+                blue: (invertedColor.blue + averageColor.blue) / 2
+            }
+            return [basicColor, color2, averageColor, color4, invertedColor];
+        }
+
+        for (let color of getGradientColors(testColor1)) {
+            document.body.innerHTML +=/*HTML*/`
+                <div style="width: 50px; height: 50px; background-color: rgb(${color.red}, ${color.green}, ${color.blue})"></div>
+               
+            `;
+        }
+    </script>
+</body>
+
+</html>
