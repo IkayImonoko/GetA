@@ -1,11 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oppgave 171 E</title>
 </head>
+
 <body>
-    
+    <div id="app">
+        <textarea oninput="text=this.value">
+        </textarea>
+        <div>
+            <button onclick="countWordsOccurences(text)">Count</button>
+        </div>
+    </div>
+    <script>
+        let text = '';
+        function countWordsOccurences(text) {
+            words = text.split(' ');
+            const wordCounts = {};
+            for (word of words) {
+                if (wordCounts[word]) {
+                    wordCounts[word]++;
+                }
+                else {
+                    wordCounts[word] = 1;
+                }
+            }
+            for (let word in wordCounts) {
+                console.log(`${word} : ${wordCounts[word]}`)
+            }
+
+        }
+    </script>
 </body>
+
 </html>
