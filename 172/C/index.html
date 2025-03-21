@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 172 A</title>
+</head>
+
+<body onload="showTasks(tasks)">
+    <div id="app"></div>
+    <script>
+        let tasks = [
+            {
+                id: 1,
+                text: 'Task 1',
+                doneDate: null,
+                responsible: 'Nikita'
+            },
+            {
+                id: 2,
+                text: 'Task 2',
+                doneDate: null,
+                responsible: 'Nikita'
+            },
+            {
+                id: 3,
+                text: 'Task 3',
+                doneDate: null,
+                responsible: 'Nikita'
+            }
+        ];
+
+        function showTasks(tasks) {
+            let tasksHtml = '';
+            for (let task of tasks) {
+                tasksHtml += /*HML*/`
+                <div>
+                    <h3>${task.text} <button onclick='deleteTask(${task.id})'>X</button></h3>
+                    Done at: ${task.doneDate ?? 'in process'} 
+                    <input id='${task.id}' type='checkbox' oninput='setDoneDate(${task.id})' ${task.doneDate ? 'checked disabled' : ''}></br>
+                    Responsible: ${task.responsible}
+                </div>
+                `;
+            }
+            document.getElementById('app').innerHTML = tasksHtml;
+        }
+
+        function setDoneDate(taskId) {
+            //console.log(`hello from task ${taskId}`);
+            let now = new Date();
+            let date = now.toLocaleDateString();
+            for (let task of tasks) {
+                if (task.id === taskId) {
+                    task.doneDate = date;
+                    break;
+                }
+            }
+            showTasks(tasks);
+        }
+
+        function deleteTask(taskId) {
+            let index = 0;
+            for (let task of tasks) {
+                if (task.id === taskId) {
+                    tasks.splice(index, 1);
+                    break;
+                }
+                index++;
+            }
+            showTasks(tasks);
+        }
+    </script>
+</body>
+
+</html>

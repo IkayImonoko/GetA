@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 172 A</title>
+</head>
+
+<body onload="showTasks(tasks)">
+    <div id="app"></div>
+    <script>
+        let tasks = [
+            {
+                id: 1,
+                text: 'Task 1',
+                doneDate: null,
+                responsible:'Nikita'
+            },
+            {
+                id: 2,
+                text: 'Task 2', 
+                doneDate: null,
+                responsible: 'Nikita'
+            }
+        ];
+
+        function showTasks(tasks) {
+            let tasksHtml = '';
+            for (let task of tasks) {
+                tasksHtml += /*HTML*/`
+                <div>
+                    <h3>${task.text}</h3>
+                    Done at: ${task.doneDate ?? 'in process'}</br>
+                    Responsible: ${task.responsible}
+                </div>
+                `;
+            }
+            document.getElementById('app').innerHTML = tasksHtml;
+        }
+    </script>
+</body>
+
+</html>
