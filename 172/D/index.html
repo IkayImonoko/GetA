@@ -4,12 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oppgave 172 C</title>
+    <title>Oppgave 172 D</title>
 </head>
 
 <body onload="showTasks(tasks)">
     <div id="app"></div>
     <script>
+        let IsAddTaskInput = false;
+        let text = '';
+        let responsible = '';
         let tasks = [
             {
                 id: 1,
@@ -32,9 +35,11 @@
         ];
 
         function showTasks(tasks) {
-            let tasksHtml = '';
+            let tasksHtml = `<button onclick='showAddOppgaveInput()'>+</button></br>
+                                ${IsAddTaskInput ? createAddTaskInputHtml() : ''}
+                                `;
             for (let task of tasks) {
-                tasksHtml += /*HML*/`
+                tasksHtml += /*HTML*/`
                 <div>
                     <h3>${task.text} <button onclick='deleteTask(${task.id})'>X</button></h3>
                     Done at: ${task.doneDate ?? 'in process'} 
@@ -68,6 +73,33 @@
                 }
                 index++;
             }
+            showTasks(tasks);
+        }
+
+        function showAddOppgaveInput() {
+            IsAddTaskInput = !IsAddTaskInput;
+            showTasks(tasks);
+            console.log(IsAddTaskInput);
+        }
+
+        function createAddTaskInputHtml() {
+            return  /*HTML*/`
+            text: <input oninput='text=this.value'></br>
+            responsible: <input oninput='responsible=this.value'></br>
+            <button onclick='addTask()'>Add</button>
+            `;
+        }
+
+        function addTask() {
+            let newTask = {
+                id: tasks[tasks.length - 1].id + 1,
+                text: text,
+                doneDate: null,
+                responsible: responsible
+            };
+            tasks.push(newTask);
+            text = '';
+            responsible = '';
             showTasks(tasks);
         }
     </script>
