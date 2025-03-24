@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 172 F</title>
+</head>
+
+<body onload="showTasks(tasks)">
+    <div id="app"></div>
+    <script>
+        let inputId = -1;
+        let text = '';
+        let responsible = '';
+        let tasks = [
+            {
+                id: 1,
+                text: 'Task 1',
+                doneDate: null,
+                responsible: 'Nikita'
+            },
+            {
+                id: 2,
+                text: 'Task 2',
+                doneDate: null,
+                responsible: 'Martin'
+            },
+            {
+                id: 3,
+                text: 'Task 3',
+                doneDate: null,
+                responsible: 'Nikita'
+            }
+        ];
+
+        function showTasks(tasks) {
+            let options = '';
+            for (responsible of findUniqueResponsibles()) {
+                options += `<option value="${responsible}">${responsible}</option>`;
+            }
+            let tasksHtml = `<button onclick='showAddOppgaveInput(0)'>+</button></br>
+                                ${inputId == 0 ? createAddTaskInputHtml() + '</br>' : ''}
+                                <select>
+                                    ${options}
+                                </select>
+                                `;
+            for (let task of tasks) {
+                tasksHtml += /*HTML*/`
+                <div>
+                    <h3>${task.text} <button onclick='deleteTask(${task.id})'>X</button>
+                        <button onclick='showAddOppgaveInput(${task.id})'>Edit</button>
+                    </h3>
+                    ${inputId == task.id ? createAddTaskInputHtml() + '</br>' : ''}
+                    Done at: ${task.doneDate ?? 'in process'} 
+                    <input id='${task.id}' type='checkbox' oninput='setDoneDate(${task.id})' ${task.doneDate ? 'checked disabled' : ''}></br>
+                    Responsible: ${task.responsible}
+                </div>
+                `;
+            }
+            document.getElementById('app').innerHTML = tasksHtml;
+        }
+
+        function setDoneDate(taskId) {
+            //console.log(`hello from task ${taskId}`);
+            let now = new Date();
+            let date = now.toLocaleDateString();
+            for (let task of tasks) {
+                if (task.id === taskId) {
+                    task.doneDate = date;
+                    break;
+                }
+            }
+            showTasks(tasks);
+        }
+
+        function deleteTask(taskId) {
+            let index = 0;
+            for (let task of tasks) {
+                if (task.id === taskId) {
+                    tasks.splice(index, 1);
+                    break;
+                }
+                index++;
+            }
+            showTasks(tasks);
+        }
+
+        function showAddOppgaveInput(id) {
+            if (inputId === -1) {
+                inputId = id
+            }
+            else {
+                inputId = -1
+            }
+            showTasks(tasks);
+            console.log(inputId);
+        }
+
+        function createAddTaskInputHtml() {
+            return  /*HTML*/`
+            text: <input oninput='text=this.value'></br>
+            responsible: <input oninput='responsible=this.value'></br>
+            <button onclick='addTask()'>Add</button>
+            `;
+        }
+
+        function addTask() {
+            if (inputId == 0) {
+                let newTask = {
+                    id: tasks[tasks.length - 1].id + 1,
+                    text: text,
+                    doneDate: null,
+                    responsible: responsible
+                };
+                tasks.push(newTask);
+            }
+            else {
+                for (let task of tasks) {
+                    if (task.id === inputId) {
+                        if (text != '') task.text = text;
+                        if (responsible != '') task.responsible = responsible;
+                    }
+                }
+            }
+            text = '';
+            responsible = '';
+            showTasks(tasks);
+        }
+
+        function findUniqueResponsibles() {
+            let uniqueResponsibles = [];
+            let isUnique = true;
+            for (let task of tasks) {
+                for (let responsible of uniqueResponsibles) {
+                    if (responsible === task.responsible) {
+                        isUnique = false;
+                        break;
+                    }
+                }
+                if (isUnique) uniqueResponsibles.push(task.responsible);
+                else {
+                    isUnique = true;
+                }
+            }
+
+            return uniqueResponsibles;
+        }
+    </script>
+</body>
+
+</html>
