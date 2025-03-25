@@ -10,9 +10,11 @@
 <body onload="showTasks(tasks)">
     <div id="app"></div>
     <script>
+        let filter = 'all';
         let inputId = -1;
         let text = '';
         let responsible = '';
+
         let tasks = [
             {
                 id: 1,
@@ -34,19 +36,21 @@
             }
         ];
 
-        function showTasks(tasks) {
+        function showTasks(tasks) { 
             let options = '';
             for (responsible of findUniqueResponsibles()) {
-                options += `<option value="${responsible}">${responsible}</option>`;
+                options += `<option value="${responsible} ${filter === responsible ? "selected" : ""}">${responsible}</option>`;
             }
             let tasksHtml = `<button onclick='showAddOppgaveInput(0)'>+</button></br>
                                 ${inputId == 0 ? createAddTaskInputHtml() + '</br>' : ''}
-                                <select>
-                                    ${options}
+                                <select id="filterSelect" onchange="updateFilter(this.value)">
+                                    <option value="all" ${filter === "all" ? "selected" : ""}>All</option>
+                                    ${options}    
                                 </select>
                                 `;
             for (let task of tasks) {
-                tasksHtml += /*HTML*/`
+                if (filter === 'all' || filter === tasks.responsible) {
+                    tasksHtml += /*HTML*/`
                 <div>
                     <h3>${task.text} <button onclick='deleteTask(${task.id})'>X</button>
                         <button onclick='showAddOppgaveInput(${task.id})'>Edit</button>
@@ -57,6 +61,7 @@
                     Responsible: ${task.responsible}
                 </div>
                 `;
+                }
             }
             document.getElementById('app').innerHTML = tasksHtml;
         }
@@ -145,6 +150,11 @@
             }
 
             return uniqueResponsibles;
+        }
+
+        function updateFilter(value){
+            filter = value;
+            showTasks(tasks);
         }
     </script>
 </body>
