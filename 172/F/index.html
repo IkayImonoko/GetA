@@ -39,7 +39,7 @@
         function showTasks(tasks) { 
             let options = '';
             for (responsible of findUniqueResponsibles()) {
-                options += `<option value="${responsible} ${filter === responsible ? "selected" : ""}">${responsible}</option>`;
+                options += `<option value="${responsible}" ${filter === responsible ? "selected" : ""}>${responsible}</option>`;
             }
             let tasksHtml = `<button onclick='showAddOppgaveInput(0)'>+</button></br>
                                 ${inputId == 0 ? createAddTaskInputHtml() + '</br>' : ''}
@@ -49,18 +49,18 @@
                                 </select>
                                 `;
             for (let task of tasks) {
-                if (filter === 'all' || filter === tasks.responsible) {
+                if (filter === 'all' || filter === task.responsible) {
                     tasksHtml += /*HTML*/`
-                <div>
-                    <h3>${task.text} <button onclick='deleteTask(${task.id})'>X</button>
-                        <button onclick='showAddOppgaveInput(${task.id})'>Edit</button>
-                    </h3>
-                    ${inputId == task.id ? createAddTaskInputHtml() + '</br>' : ''}
-                    Done at: ${task.doneDate ?? 'in process'} 
-                    <input id='${task.id}' type='checkbox' oninput='setDoneDate(${task.id})' ${task.doneDate ? 'checked disabled' : ''}></br>
-                    Responsible: ${task.responsible}
-                </div>
-                `;
+                    <div>
+                        <h3>${task.text} <button onclick='deleteTask(${task.id})'>X</button>
+                            <button onclick='showAddOppgaveInput(${task.id})'>Edit</button>
+                        </h3>
+                        ${inputId == task.id ? createAddTaskInputHtml() + '</br>' : ''}
+                        Done at: ${task.doneDate ?? 'in process'} 
+                        <input id='${task.id}' type='checkbox' oninput='setDoneDate(${task.id})' ${task.doneDate ? 'checked disabled' : ''}></br>
+                        Responsible: ${task.responsible}
+                    </div>
+                    `;
                 }
             }
             document.getElementById('app').innerHTML = tasksHtml;
