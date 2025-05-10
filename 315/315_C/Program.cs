@@ -6,7 +6,7 @@
         {
             string argument = args.Length > 0 ? args[0] : "";
             
-            while (!(argument.Length > 0))
+            while (!(argument.Length > 0) || string.IsNullOrWhiteSpace(argument))
             {
                 try
                 {
