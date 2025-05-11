@@ -6,9 +6,10 @@
         {
             Console.WriteLine("Write a sentence:");
             string sentence = ReadSentence();
-            string[] words = sentence.Split(new[] { ' ', '\t', '\n'}, StringSplitOptions.RemoveEmptyEntries);
+            string[] words = sentence.Split(new[] { ' ', '\t', '\n' }, StringSplitOptions.RemoveEmptyEntries);
             int wordsCount = words.Length;
-            Console.WriteLine($"Words in the sentence:{wordsCount}\n");
+            string mostVowels = words.Aggregate("", (acc, cur) => CountVowels(cur) > CountVowels(acc) ? cur : acc);
+            Console.WriteLine($"Words in the sentence: {wordsCount}\nWord with most vowels is: {mostVowels}\n");
         }
 
         static string ReadSentence()
@@ -31,6 +32,12 @@
             }
 
             return sentence;
+        }
+
+        static int CountVowels(string word)
+        {
+            char[] vowels = { 'a', 'i', 'u', 'e', 'o', 'y', 'æ', 'ø', 'å' };
+            return word.ToLower().Count(letter => vowels.Contains(letter));
         }
     }
 }
