@@ -4,12 +4,24 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Write a sentence:");
-            string sentence = ReadSentence();
-            string[] words = sentence.Split(new[] { ' ', '\t', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            int wordsCount = words.Length;
-            string mostVowels = words.Aggregate("", (acc, cur) => CountVowels(cur) > CountVowels(acc) ? cur : acc);
-            Console.WriteLine($"Words in the sentence: {wordsCount}\nWord with most vowels is: {mostVowels}\n");
+            char[] vowels = { 'a', 'i', 'u', 'e', 'o', 'y', 'æ', 'ø', 'å' };
+            string sentence = "";
+            string exit = "exit";
+
+            while (true)
+            {
+                Console.WriteLine("Write a sentence:");
+                sentence = ReadSentence();
+                if (sentence == exit)
+                {
+                    break;
+                }
+                string[] words = sentence.Split(new[] { ' ', '\t', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                int wordsCount = words.Length;
+                string mostVowels = words.Aggregate("", (acc, cur) => CountLetters(cur, vowels) > CountLetters(acc, vowels) ? cur : acc);
+                string longestWords = words.Aggregate("", (acc, cur) => CountLetters(cur) > CountLetters(acc) ? cur : acc);
+                Console.WriteLine($"Words in the sentence: {wordsCount}\nWord with most vowels is: {mostVowels}\nLongest word is: {longestWords}\n");
+            }
         }
 
         static string ReadSentence()
@@ -34,10 +46,20 @@
             return sentence;
         }
 
-        static int CountVowels(string word)
+        static int CountLetters(string word, char[] alphabet = null)
         {
-            char[] vowels = { 'a', 'i', 'u', 'e', 'o', 'y', 'æ', 'ø', 'å' };
-            return word.ToLower().Count(letter => vowels.Contains(letter));
+            if (string.IsNullOrEmpty(word))
+            {
+                return 0;
+            }
+            if (alphabet == null)
+            {
+                return word.Length;
+            }
+            else
+            {
+                return word.ToLower().Count(letter => alphabet.Contains(char.ToLower(letter)));
+            }
         }
     }
 }
