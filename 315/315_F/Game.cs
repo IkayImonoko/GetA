@@ -37,6 +37,7 @@ namespace _315_F
         private static void UpdateView(Board board)
         {
             Console.Clear();
+            RulesMessage();
             if (!board.IsVictory())
             {
                 Draw(board);
@@ -79,7 +80,11 @@ namespace _315_F
         }
         public static void Run()
         {
-            Board board = new Board(2);
+            int boardSize = 3;
+            //int difficulty = 1;
+            Board board;
+            board = ResetBoard(boardSize);
+            RulesMessage();
             Draw(board);
 
             var emptyFieldCoordinates = ParseArrayIndexToCoordinates(board.GetNullIndex(), board.Size);
@@ -106,6 +111,10 @@ namespace _315_F
                         MoveEmptyField(ref emptyFieldCoordinates, board.Size, "Right");
                         board.SetNullIndex(ParseCoordinatesToArrayIndex(emptyFieldCoordinates, board.Size));
                         break;
+                    case ConsoleKey.S:
+                        board = ResetBoard(boardSize);
+                        emptyFieldCoordinates = ParseArrayIndexToCoordinates(board.GetNullIndex(), board.Size);
+                        break;
                     case ConsoleKey.Escape:
                         return;
                     default:
@@ -114,6 +123,30 @@ namespace _315_F
 
                 UpdateView(board);
             }
+        }
+
+        private static Board ResetBoard(int boardSize, int difficulty)
+        {
+            Board board = new Board(boardSize);
+            while (!board.IsSolvable() || board.Difficulty > difficulty)
+            {
+                board = new Board(boardSize);
+            }
+            return board;
+        }
+        private static Board ResetBoard(int boardSize)
+        {
+            Board board = new Board(boardSize);
+            while (!board.IsSolvable())
+            {
+                board = new Board(boardSize);
+            }
+            return board;
+        }
+
+        private static void RulesMessage()
+        {
+            Console.WriteLine("Move \"0\" with arrows\nPush \"s\" to refresh the board\nPush \"Esc\" to exit\n\n");
         }
     }
 }
