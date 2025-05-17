@@ -92,5 +92,17 @@ namespace _315_F
                 return _inversions % 2 == 0;
             }
         }
+
+        public void Draw()
+        {
+            for (int i = 0; i < _size; i++)
+            {
+                for (int j = 0; j < _size; j++)
+                {
+                    Console.Write($"{_numbers[_size * i + j]}   ");
+                }
+                Console.Write("\n\n");
+            }
+        }
     }
 }

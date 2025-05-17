@@ -11,17 +11,6 @@ namespace _315_F
 {
     internal class Game
     {
-        private static void Draw(Board board)
-        {
-            for (int i = 0; i < board.Size; i++)
-            {
-                for (int j = 0; j < board.Size; j++)
-                {
-                    Console.Write($"{board.Numbers[board.Size * i + j]}   ");
-                }
-                Console.Write("\n\n");
-            }
-        }
         private static int ParseCoordinatesToArrayIndex(Point coordinates, int boardSize)
         {
             return coordinates.Y * boardSize + coordinates.X;
@@ -40,7 +29,7 @@ namespace _315_F
             RulesMessage();
             if (!board.IsVictory())
             {
-                Draw(board);
+                board.Draw();
             }
             else
             {
@@ -85,7 +74,7 @@ namespace _315_F
             Board board;
             board = ResetBoard(boardSize);
             RulesMessage();
-            Draw(board);
+            board.Draw();
 
             var emptyFieldCoordinates = ParseArrayIndexToCoordinates(board.GetNullIndex(), board.Size);
 
