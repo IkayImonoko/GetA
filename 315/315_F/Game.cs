@@ -11,6 +11,9 @@ namespace _315_F
 {
     internal class Game
     {
+        private Point EmtpyFiendPosition;
+        private int BoardSize;
+        private Board Board;
         private static int ParseCoordinatesToArrayIndex(Point coordinates, int boardSize)
         {
             return coordinates.Y * boardSize + coordinates.X;
@@ -67,16 +70,16 @@ namespace _315_F
                     break;
             }
         }
-        public static void Run()
+        public void Run()
         {
-            int boardSize = 3;
-            //int difficulty = 1;
-            Board board;
-            board = ResetBoard(boardSize);
+            //int boardSize = 3;
+            ////int difficulty = 1;
+            //Board Board;
+            Board = ResetBoard(boardSize);
             RulesMessage();
-            board.Draw();
+            Board.Draw();
 
-            var emptyFieldCoordinates = ParseArrayIndexToCoordinates(board.GetNullIndex(), board.Size);
+            var emptyFieldCoordinates = ParseArrayIndexToCoordinates(Board.GetNullIndex(), Board.Size);
 
             while (true)
             {
@@ -85,24 +88,24 @@ namespace _315_F
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        MoveEmptyField(ref emptyFieldCoordinates, board.Size, "Up");
-                        board.SetNullIndex(ParseCoordinatesToArrayIndex(emptyFieldCoordinates, board.Size));
+                        MoveEmptyField(ref emptyFieldCoordinates, Board.Size, "Up");
+                        Board.SetNullIndex(ParseCoordinatesToArrayIndex(emptyFieldCoordinates, Board.Size));
                         break;
                     case ConsoleKey.DownArrow:
-                        MoveEmptyField(ref emptyFieldCoordinates, board.Size, "Down");
-                        board.SetNullIndex(ParseCoordinatesToArrayIndex(emptyFieldCoordinates, board.Size));
+                        MoveEmptyField(ref emptyFieldCoordinates, Board.Size, "Down");
+                        Board.SetNullIndex(ParseCoordinatesToArrayIndex(emptyFieldCoordinates, Board.Size));
                         break;
                     case ConsoleKey.LeftArrow:
-                        MoveEmptyField(ref emptyFieldCoordinates, board.Size, "Left");
-                        board.SetNullIndex(ParseCoordinatesToArrayIndex(emptyFieldCoordinates, board.Size));
+                        MoveEmptyField(ref emptyFieldCoordinates, Board.Size, "Left");
+                        Board.SetNullIndex(ParseCoordinatesToArrayIndex(emptyFieldCoordinates, Board.Size));
                         break;
                     case ConsoleKey.RightArrow:
-                        MoveEmptyField(ref emptyFieldCoordinates, board.Size, "Right");
-                        board.SetNullIndex(ParseCoordinatesToArrayIndex(emptyFieldCoordinates, board.Size));
+                        MoveEmptyField(ref emptyFieldCoordinates, Board.Size, "Right");
+                        Board.SetNullIndex(ParseCoordinatesToArrayIndex(emptyFieldCoordinates, Board.Size));
                         break;
                     case ConsoleKey.S:
-                        board = ResetBoard(boardSize);
-                        emptyFieldCoordinates = ParseArrayIndexToCoordinates(board.GetNullIndex(), board.Size);
+                        Board = ResetBoard(boardSize);
+                        emptyFieldCoordinates = ParseArrayIndexToCoordinates(Board.GetNullIndex(), Board.Size);
                         break;
                     case ConsoleKey.Escape:
                         return;
@@ -110,7 +113,7 @@ namespace _315_F
                         break;
                 }
 
-                UpdateView(board);
+                UpdateView(Board);
             }
         }
 
@@ -135,7 +138,7 @@ namespace _315_F
 
         private static void RulesMessage()
         {
-            Console.WriteLine("Move \"0\" with arrows\nPush \"s\" to refresh the board\nPush \"Esc\" to exit\n\n");
+            Console.WriteLine("Move \"0\" with arrows\nPush \"s\" to refresh the Board\nPush \"Esc\" to exit\n\n");
         }
     }
 }
