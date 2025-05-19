@@ -11,19 +11,20 @@ namespace _315_F
 {
     internal class Game
     {
-        private Point EmtpyFiendPosition;
-        private int BoardSize;
-        private Board Board;
-        private static int ParseCoordinatesToArrayIndex(Point coordinates, int boardSize)
+        private Point _emtpyFieldPosition;
+        private int _boardSize;
+        private Board _board;
+
+        private int ParseCoordinatesToArrayIndex(Point coordinates)
         {
-            return coordinates.Y * boardSize + coordinates.X;
+            return coordinates.Y * _boardSize + coordinates.X;
         }
 
-        private static Point ParseArrayIndexToCoordinates(int index, int boardSize)
+        private Point ParseArrayIndexToCoordinates(int index)
         {
             Point coordinates = new Point();
-            coordinates.Y = index / boardSize;
-            coordinates.X = index % boardSize;
+            coordinates.Y = index / _boardSize;
+            coordinates.X = index % _boardSize;
             return coordinates;
         }
         private static void UpdateView(Board board)
@@ -40,46 +41,48 @@ namespace _315_F
             }
         }
 
-        private static void MoveEmptyField(ref Point currentPosition, int bordSize, string direction)
+        private void MoveEmptyField(string direction)
         {
             switch (direction)
             {
                 case "Up":
-                    if (currentPosition.Y > 0)
+                    if (_emtpyFieldPosition.Y > 0)
                     {
-                        currentPosition.Y -= 1;
+                        _emtpyFieldPosition.Y -= 1;
                     }
                     break;
                 case "Down":
-                    if (currentPosition.Y < bordSize - 1)
+                    if (_emtpyFieldPosition.Y < _boardSize - 1)
                     {
-                        currentPosition.Y += 1;
+                        _emtpyFieldPosition.Y += 1;
                     }
                     break;
                 case "Left":
-                    if (currentPosition.X > 0)
+                    if (_emtpyFieldPosition.X > 0)
                     {
-                        currentPosition.X -= 1;
+                        _emtpyFieldPosition.X -= 1;
                     }
                     break;
                 case "Right":
-                    if (currentPosition.X < bordSize - 1)
+                    if (_emtpyFieldPosition.X < _boardSize - 1)
                     {
-                        currentPosition.X += 1;
+                        _emtpyFieldPosition.X += 1;
                     }
                     break;
             }
         }
+
+        public Game(int boardSize = 3)
+        {
+            _boardSize = boardSize;
+            _board = ResetBoard(_boardSize);
+            _emtpyFieldPosition = ParseArrayIndexToCoordinates(_board.GetNullIndex());
+        }
         public void Run()
         {
-            //int boardSize = 3;
-            ////int difficulty = 1;
-            //Board Board;
-            Board = ResetBoard(boardSize);
             RulesMessage();
-            Board.Draw();
+            _board.Draw();
 
-            var emptyFieldCoordinates = ParseArrayIndexToCoordinates(Board.GetNullIndex(), Board.Size);
 
             while (true)
             {
@@ -88,24 +91,24 @@ namespace _315_F
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        MoveEmptyField(ref emptyFieldCoordinates, Board.Size, "Up");
-                        Board.SetNullIndex(ParseCoordinatesToArrayIndex(emptyFieldCoordinates, Board.Size));
+                        MoveEmptyField("Up");
+                        _board.SetNullIndex(ParseCoordinatesToArrayIndex(_emtpyFieldPosition));
                         break;
                     case ConsoleKey.DownArrow:
-                        MoveEmptyField(ref emptyFieldCoordinates, Board.Size, "Down");
-                        Board.SetNullIndex(ParseCoordinatesToArrayIndex(emptyFieldCoordinates, Board.Size));
+                        MoveEmptyField("Down");
+                        _board.SetNullIndex(ParseCoordinatesToArrayIndex(_emtpyFieldPosition));
                         break;
                     case ConsoleKey.LeftArrow:
-                        MoveEmptyField(ref emptyFieldCoordinates, Board.Size, "Left");
-                        Board.SetNullIndex(ParseCoordinatesToArrayIndex(emptyFieldCoordinates, Board.Size));
+                        MoveEmptyField("Left");
+                        _board.SetNullIndex(ParseCoordinatesToArrayIndex(_emtpyFieldPosition));
                         break;
                     case ConsoleKey.RightArrow:
-                        MoveEmptyField(ref emptyFieldCoordinates, Board.Size, "Right");
-                        Board.SetNullIndex(ParseCoordinatesToArrayIndex(emptyFieldCoordinates, Board.Size));
+                        MoveEmptyField("Right");
+                        _board.SetNullIndex(ParseCoordinatesToArrayIndex(_emtpyFieldPosition));
                         break;
                     case ConsoleKey.S:
-                        Board = ResetBoard(boardSize);
-                        emptyFieldCoordinates = ParseArrayIndexToCoordinates(Board.GetNullIndex(), Board.Size);
+                        _board = ResetBoard(_boardSize);
+                        _emtpyFieldPosition = ParseArrayIndexToCoordinates(_board.GetNullIndex());
                         break;
                     case ConsoleKey.Escape:
                         return;
@@ -113,7 +116,7 @@ namespace _315_F
                         break;
                 }
 
-                UpdateView(Board);
+                UpdateView(_board);
             }
         }
 
