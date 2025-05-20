@@ -111,7 +111,8 @@ namespace _315_F
                         _emtpyFieldPosition = ParseArrayIndexToCoordinates(_board.GetNullIndex());
                         break;
                     case ConsoleKey.Escape:
-                        return;
+                        Environment.Exit(0);
+                        break;
                     default:
                         break;
                 }
