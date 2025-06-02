@@ -22,7 +22,7 @@ namespace _315_F
 
         private Point ParseArrayIndexToCoordinates(int index)
         {
-            Point coordinates = new Point();
+            var coordinates = new Point();
             coordinates.Y = index / _boardSize;
             coordinates.X = index % _boardSize;
             return coordinates;
