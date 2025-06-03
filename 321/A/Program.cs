@@ -4,7 +4,10 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            var counter = new CharCounter();
+            counter.SetText("Ta utgangspunkt i koden");
+            counter.Count();
+            counter.Show();
         }
     }
 }
